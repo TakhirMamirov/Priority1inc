@@ -1,8 +1,14 @@
 import { useState } from 'react';
 
+// Today's local date as yyyy-MM-dd ('en-CA' formats dates that way), so it compares
+// directly with the API's dueDate strings.
+const today = () => new Date().toLocaleDateString('en-CA');
+
 export default function TodoItem({ todo, onToggle, onRename, onDueDateChange, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(todo.title);
+
+  const overdue = !todo.isComplete && todo.dueDate !== null && todo.dueDate < today();
 
   function saveEdit() {
     const trimmed = draft.trim();
@@ -15,7 +21,7 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDateChange, on
   }
 
   return (
-    <li className="todo-item">
+    <li className={`todo-item ${overdue ? 'overdue' : ''}`}>
       <input
         type="checkbox"
         checked={todo.isComplete}
@@ -47,6 +53,8 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDateChange, on
           {todo.title}
         </span>
       )}
+
+      {overdue && <span className="badge overdue">Overdue</span>}
 
       <input
         type="date"

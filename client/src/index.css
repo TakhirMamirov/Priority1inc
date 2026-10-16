@@ -250,6 +250,30 @@ ul.todo-list {
   color: #8c959f;
 }
 
+.todo-item.overdue {
+  background: #fff8f7;
+  border-color: #ffcecb;
+  box-shadow: inset 3px 0 0 #cf222e;
+}
+
+.todo-item.overdue input.due-date {
+  color: #cf222e;
+}
+
+.badge {
+  padding: 0.1rem 0.5rem;
+  border-radius: 2em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge.overdue {
+  color: #cf222e;
+  background: #ffebe9;
+  border: 1px solid #ffcecb;
+}
+
 .muted {
   color: #6e7781;
 }
