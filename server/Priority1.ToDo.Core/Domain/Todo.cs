@@ -9,4 +9,8 @@ public class Todo : EntityBase
     public string Title { get; set; } = string.Empty;
 
     public bool IsComplete { get; set; } = false;
+
+    public int TodoListId { get; set; }
+
+    public TodoList? TodoList { get; set; }
 }

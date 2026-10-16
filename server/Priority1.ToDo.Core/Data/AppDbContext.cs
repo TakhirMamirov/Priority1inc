@@ -12,9 +12,18 @@ public class AppDbContext : DbContext
 
     public DbSet<Todo> Todos => Set<Todo>();
 
+    public DbSet<TodoList> TodoLists => Set<TodoList>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        // A todo always belongs to exactly one list; deleting a list deletes its todos.
+        modelBuilder.Entity<Todo>()
+            .HasOne(t => t.TodoList)
+            .WithMany(l => l.Todos)
+            .HasForeignKey(t => t.TodoListId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken ct = default)
