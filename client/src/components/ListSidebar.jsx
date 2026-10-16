@@ -16,6 +16,17 @@ export default function ListSidebar({ lists, selectedListId, onSelect, onCreate,
     <aside className="sidebar">
       <h2>Lists</h2>
 
+      <form className="add-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="New list"
+          maxLength={100}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
+
       {lists.length === 0 ? (
         <p className="muted">No lists yet.</p>
       ) : (
@@ -32,17 +43,6 @@ export default function ListSidebar({ lists, selectedListId, onSelect, onCreate,
           ))}
         </ul>
       )}
-
-      <form className="add-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="New list"
-          maxLength={100}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button type="submit">Add</button>
-      </form>
     </aside>
   );
 }
