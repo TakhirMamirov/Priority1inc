@@ -3,6 +3,7 @@ export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 const TODOS_URL = `${API_BASE_URL}/todos`;
+const LISTS_URL = `${API_BASE_URL}/lists`;
 
 async function handle(res) {
   if (!res.ok) {
@@ -34,4 +35,28 @@ export function updateTodo(id, { title, isComplete }) {
 
 export function deleteTodo(id) {
   return fetch(`${TODOS_URL}/${id}`, { method: 'DELETE' }).then(handle);
+}
+
+export function getLists() {
+  return fetch(LISTS_URL).then(handle);
+}
+
+export function createList(name) {
+  return fetch(LISTS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  }).then(handle);
+}
+
+export function renameList(id, name) {
+  return fetch(`${LISTS_URL}/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  }).then(handle);
+}
+
+export function deleteList(id) {
+  return fetch(`${LISTS_URL}/${id}`, { method: 'DELETE' }).then(handle);
 }
