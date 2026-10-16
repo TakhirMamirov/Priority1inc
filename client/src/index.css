@@ -287,6 +287,16 @@ ul.todo-list {
   color: #1f2328;
 }
 
+/* Same muted look as the "Sort by" label. */
+.add-form .due-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: none;
+  font-size: 0.85rem;
+  color: #6e7781;
+}
+
 .todo-item input.due-date {
   padding: 0.25rem 0.4rem;
   border: 1px solid transparent;

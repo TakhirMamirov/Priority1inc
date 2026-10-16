@@ -21,13 +21,16 @@ export default function AddTodoForm({ onAdd }) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <input
-        type="date"
-        className="due-date"
-        title="Due date (optional)"
-        value={dueDate}
-        onChange={(e) => setDueDate(e.target.value)}
-      />
+      <label className="due-label">
+        Due
+        <input
+          type="date"
+          className="due-date"
+          title="Due date (optional)"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+        />
+      </label>
       <button type="submit" className="primary">
         Add
       </button>
