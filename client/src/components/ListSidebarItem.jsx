@@ -1,5 +1,14 @@
 import { useState } from 'react';
 
+// "list-check" icon from Tabler Icons (MIT), inlined to avoid an icon library.
+function ListIcon() {
+  return (
+    <svg className="list-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3.5 5.5l1.5 1.5l2.5 -2.5M3.5 11.5l1.5 1.5l2.5 -2.5M3.5 17.5l1.5 1.5l2.5 -2.5M11 6h9M11 12h9M11 18h9" />
+    </svg>
+  );
+}
+
 export default function ListSidebarItem({ list, selected, onSelect, onRename, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(list.name);
@@ -43,6 +52,7 @@ export default function ListSidebarItem({ list, selected, onSelect, onRename, on
       onDoubleClick={() => setEditing(true)}
       title="Double-click to rename"
     >
+      <ListIcon />
       <span className="name">{list.name}</span>
       <button className="icon" title="Rename list" onClick={(e) => { e.stopPropagation(); setEditing(true); }}>
         ✎

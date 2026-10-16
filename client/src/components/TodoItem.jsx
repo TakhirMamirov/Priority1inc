@@ -8,7 +8,10 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDateChange, on
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(todo.title);
 
-  const overdue = !todo.isComplete && todo.dueDate !== null && todo.dueDate < today();
+  const open = !todo.isComplete && todo.dueDate !== null;
+  const now = today();
+  const overdue = open && todo.dueDate < now;
+  const dueToday = open && todo.dueDate === now;
 
   function saveEdit() {
     const trimmed = draft.trim();
@@ -55,6 +58,7 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDateChange, on
       )}
 
       {overdue && <span className="badge overdue">Overdue</span>}
+      {dueToday && <span className="badge due-today">Due today</span>}
 
       <input
         type="date"
