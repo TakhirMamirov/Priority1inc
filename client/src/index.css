@@ -1,0 +1,102 @@
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #1f2328;
+  background: #f6f8fa;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1rem;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+}
+
+.add-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.add-form input {
+  flex: 1;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background: #f3f4f6;
+}
+
+button.primary {
+  background: #1f883d;
+  border-color: #1f883d;
+  color: #fff;
+}
+
+button.primary:hover {
+  background: #1a7f37;
+}
+
+ul.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+}
+
+.todo-item .title {
+  flex: 1;
+}
+
+.todo-item .title.complete {
+  text-decoration: line-through;
+  color: #6e7781;
+}
+
+.todo-item input.edit-title {
+  flex: 1;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.muted {
+  color: #6e7781;
+}
+
+.error {
+  color: #cf222e;
+  margin-bottom: 1rem;
+}

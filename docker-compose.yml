@@ -1,0 +1,18 @@
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: priority1-todo-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      # Dev-only password. Matches the connection string in
+      # server/Priority1.ToDo.Api/appsettings.Development.json.
+      MSSQL_SA_PASSWORD: "YourStrong@Passw0rd"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+volumes:
+  mssql-data:

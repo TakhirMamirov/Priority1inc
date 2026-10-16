@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Priority1.ToDo.Api", "Priority1.ToDo.Api\Priority1.ToDo.Api.csproj", "{FB2D784F-1338-47BF-88CF-3A887CA2E366}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Priority1.ToDo.Core", "Priority1.ToDo.Core\Priority1.ToDo.Core.csproj", "{748CFEF8-347E-4539-9304-CA3A7241A1E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB2D784F-1338-47BF-88CF-3A887CA2E366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB2D784F-1338-47BF-88CF-3A887CA2E366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB2D784F-1338-47BF-88CF-3A887CA2E366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB2D784F-1338-47BF-88CF-3A887CA2E366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{748CFEF8-347E-4539-9304-CA3A7241A1E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748CFEF8-347E-4539-9304-CA3A7241A1E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748CFEF8-347E-4539-9304-CA3A7241A1E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748CFEF8-347E-4539-9304-CA3A7241A1E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
