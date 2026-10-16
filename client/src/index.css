@@ -10,7 +10,7 @@ body {
 }
 
 .app {
-  max-width: 880px;
+  max-width: 990px;
   margin: 0 auto;
 }
 
@@ -26,7 +26,7 @@ h2 {
 
 .layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 330px minmax(0, 1fr);
   min-height: 420px;
   background: #fff;
   border: 1px solid #d0d7de;
