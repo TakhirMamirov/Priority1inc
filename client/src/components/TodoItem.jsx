@@ -48,7 +48,7 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDateChange, on
         <span
           className={`title ${todo.isComplete ? 'complete' : ''}`}
           onDoubleClick={() => setEditing(true)}
-          title="Double-click to edit"
+          title={`${todo.title}\n(double-click to edit)`}
         >
           {todo.title}
         </span>

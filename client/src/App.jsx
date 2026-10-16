@@ -153,7 +153,7 @@ export default function App() {
             <p className="muted">Create a list to get started.</p>
           ) : (
             <>
-              <h2>{selectedList.name}</h2>
+              <h2 className="list-title" title={selectedList.name}>{selectedList.name}</h2>
               <AddTodoForm onAdd={handleAdd} />
               {todos.length > 0 && (
                 <div className="toolbar">

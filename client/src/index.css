@@ -44,6 +44,12 @@ h2 {
   padding: 1rem 1.25rem;
 }
 
+.list-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (max-width: 640px) {
   .layout {
     grid-template-columns: 1fr;
@@ -211,6 +217,10 @@ ul.todo-list {
 
 .todo-item .title {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .todo-item .title.complete {
@@ -220,6 +230,7 @@ ul.todo-list {
 
 .todo-item input.edit-title {
   flex: 1;
+  min-width: 0;
   padding: 0.35rem 0.5rem;
   border: 1px solid #d0d7de;
   border-radius: 6px;
