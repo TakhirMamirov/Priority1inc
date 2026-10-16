@@ -52,7 +52,7 @@ h2 {
 
 @media (max-width: 640px) {
   .layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .sidebar {
@@ -254,6 +254,34 @@ ul.todo-list {
   font-size: 1rem;
 }
 
+/* On phones: title on the first line; badge, date and buttons wrap to a right-aligned second line. */
+@media (max-width: 640px) {
+  .todo-item {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .todo-item .title,
+  .todo-item input.edit-title {
+    flex-basis: calc(100% - 2rem);
+  }
+
+  .todo-item button.row-action {
+    padding: 0.3rem 0.55rem;
+    font-size: 0.8rem;
+  }
+
+  /* Same for the add form: title on its own line, date and Add below. */
+  main .add-form {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  main .add-form input[type='text'] {
+    flex-basis: 100%;
+  }
+}
+
 .add-form input.due-date {
   flex: none;
   color: #1f2328;
@@ -276,6 +304,68 @@ ul.todo-list {
 
 .todo-item input.due-date.empty {
   color: #8c959f;
+}
+
+.todo-item button.due-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid transparent;
+  background: none;
+  font-size: 0.85rem;
+  color: #57606a;
+  white-space: nowrap;
+}
+
+.todo-item button.due-text:hover {
+  border-color: #d0d7de;
+  background: none;
+}
+
+.todo-item.overdue button.due-text {
+  color: #cf222e;
+}
+
+.calendar-icon {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.todo-item button.add-date {
+  padding: 0.25rem 0.4rem;
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  color: #8c959f;
+}
+
+.todo-item button.add-date:hover {
+  background: none;
+  color: #1f2328;
+}
+
+/* "Add date" appears on hover or keyboard focus. While hidden it keeps its space,
+   so rows don't shift when it appears. */
+.todo-item button.add-date {
+  visibility: hidden;
+}
+
+.todo-item:hover button.add-date,
+.todo-item:focus-within button.add-date {
+  visibility: visible;
+}
+
+/* Touch screens can't hover, so keep it visible there. */
+@media (hover: none) {
+  .todo-item button.add-date {
+    visibility: visible;
+  }
 }
 
 .todo-item.overdue {
@@ -358,6 +448,30 @@ button.danger:hover {
 }
 
 .error {
-  color: #cf222e;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   margin-bottom: 1rem;
+  padding: 0.6rem 0.75rem;
+  color: #cf222e;
+  background: #ffebe9;
+  border: 1px solid #ffcecb;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.error span {
+  flex: 1;
+}
+
+button.dismiss {
+  padding: 0 0.25rem;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+button.dismiss:hover {
+  background: none;
+  color: #82071e;
 }
