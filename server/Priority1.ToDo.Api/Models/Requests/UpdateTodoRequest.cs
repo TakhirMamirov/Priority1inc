@@ -3,12 +3,17 @@ using Priority1.ToDo.Core.Domain;
 
 namespace Priority1.ToDo.Api.Models.Requests;
 
+/// <summary>
+/// Request body for updating a todo item.
+/// </summary>
 public class UpdateTodoRequest
 {
-    
+    /// <summary>The todo title. Required, up to 200 characters.</summary>
     [Required]
-    public string Title { get; set; }
+    [MaxLength(200)]
+    public string Title { get; set; } = string.Empty;
 
+    /// <summary>Whether the todo is complete.</summary>
     public bool IsComplete { get; set; }
 
     public Todo ToModel(int id)
