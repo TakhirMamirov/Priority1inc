@@ -145,7 +145,7 @@ button.icon {
   background: none;
   color: #6e7781;
   font-size: 0.85rem;
-  visibility: hidden;
+  display: none;
 }
 
 button.icon:hover {
@@ -155,7 +155,7 @@ button.icon:hover {
 
 .list-nav-item:hover button.icon,
 .list-nav-item.selected button.icon {
-  visibility: visible;
+  display: inline-block;
 }
 
 .add-form {
