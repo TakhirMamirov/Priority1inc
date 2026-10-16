@@ -1,6 +1,16 @@
 # Priority1.ToDo
 
-A deliberately minimal full-stack TODO application. It is the starting point for a take-home skills exercise: the CRUD basics work end to end, leaving obvious room to add functionality.
+A full-stack TODO application, extended from a minimal CRUD starting point as a take-home skills exercise.
+
+**Features**
+
+- **Multiple lists:** create, rename and delete lists; each todo belongs to one list. Deleting a list deletes its todos.
+- **Due dates:** optional due date per todo, set when adding or edited inline.
+- **Sorting:** by create date or due date, ascending or descending; todos without a due date always sort last.
+- **Status indicators:** incomplete todos past their due date are highlighted as overdue; those due today get a badge.
+- **Safe deletes:** deleting a todo or list asks for confirmation first.
+
+**Stack**
 
 - **Backend:** .NET 8 Web API, Entity Framework Core (Code First), SQL Server
 - **Frontend:** React (Vite, plain JavaScript)
@@ -49,7 +59,7 @@ dotnet ef migrations add < MigrationName > --project ../Priority1.ToDo.Core --st
 dotnet ef database update
 ```
 
-This creates the `Priority1ToDo` database and the `Todos` table.
+This creates the `Priority1ToDo` database with the `TodoLists` and `Todos` tables. Existing todos from an earlier version of the schema are moved into a default list named "My List".
 
 ### 3. Run the API
 
@@ -87,37 +97,52 @@ Priority1.ToDo/
 ├── server/
 │   ├── Priority1.ToDo.sln
 │   ├── Priority1.ToDo.Api/       # ASP.NET Core Web API (startup application)
-│   │   ├── Controllers/          # TodosController — thin, calls into services
+│   │   ├── Controllers/          # TodoListsController, TodosController — thin, call into services
 │   │   ├── Models/               # Request/response DTOs
-│   │   ├── Program.cs            # DI, EF, CORS, Swagger wiring
+│   │   ├── Program.cs            # DI, EF, CORS, Swagger wiring (with XML docs)
 │   │   └── appsettings*.json     # Connection string (Development matches Docker)
 │   └── Priority1.ToDo.Core/      # Class library (referenced by the Api)
-│       ├── Domain/               # EF entities (Todo)
+│       ├── Domain/               # EF entities (TodoList, Todo)
 │       ├── Data/                 # AppDbContext
 │       ├── Migrations/           # EF Code First migrations
-│       └── Services/             # Business logic (ITodoService / TodoService)
+│       └── Services/             # Business logic (ITodoListService, ITodoService and implementations)
 └── client/                       # Vite + React app
     └── src/
         ├── api.js                # API base URL + fetch helpers
-        ├── App.jsx               # Loads todos, owns state, wires handlers
-        └── components/           # AddTodoForm, TodoList, TodoItem
+        ├── App.jsx               # Loads lists and todos, owns state, wires handlers
+        ├── sortTodos.js          # Client-side sort options and comparer
+        └── components/           # ListSidebar, ListSidebarItem, AddTodoForm, TodoList, TodoItem, ConfirmDialog
 ```
 
 ### API endpoints
 
 | Method | Route | Description |
 | --- | --- | --- |
-| GET | `/todos` | List all todos |
+| GET | `/lists` | List all lists |
+| GET | `/lists/{id}` | Get one list |
+| POST | `/lists` | Create a list |
+| PUT | `/lists/{id}` | Rename a list |
+| DELETE | `/lists/{id}` | Delete a list and its todos |
+| GET | `/lists/{listId}/todos` | List the todos in a list |
+| POST | `/lists/{listId}/todos` | Create a todo in a list |
 | GET | `/todos/{id}` | Get one todo |
-| POST | `/todos` | Create a todo |
-| PUT | `/todos/{id}` | Update a todo |
+| PUT | `/todos/{id}` | Update a todo (full replace, including `dueDate`) |
 | DELETE | `/todos/{id}` | Delete a todo |
 
-The `Todo` entity: `Id`, `Title` (required), `IsComplete` (default `false`), `CreateDate` (set on insert), `UpdateDate` (set on insert and every update).
+Every endpoint is documented in Swagger with its summary and all expected response codes (`200`/`201`/`204`, `400` for validation errors, `404` when the list or todo doesn't exist).
+
+**Entities**
+
+- `TodoList`: `Id`, `Name` (required, max 100), `CreateDate`, `UpdateDate`.
+- `Todo`: `Id`, `TodoListId` (required, cascade delete), `Title` (required, max 200), `IsComplete` (default `false`), `DueDate` (optional, date only), `CreateDate`, `UpdateDate`.
+
+`CreateDate` is set on insert; `UpdateDate` on insert and every update.
 
 ### Notes / intentional simplifications
 
 - No authentication or authorization of any kind.
 - CORS is wide open for localhost in Development to keep local dev frictionless.
 - Migrations are applied manually (step 2), never on startup.
+- `DueDate` is a calendar date (`yyyy-MM-dd`, SQL `date`), so it can't shift across time zones. "Overdue" and "due today" are judged against the user's local date.
+- Sorting happens in the client: lists are small and already fully loaded, so there's no need for a server round trip.
 
