@@ -4,6 +4,7 @@ import {
   getLists, createList, renameList, deleteList,
 } from './api';
 import AddTodoForm from './components/AddTodoForm';
+import ConfirmDialog from './components/ConfirmDialog';
 import ListSidebar from './components/ListSidebar';
 import TodoList from './components/TodoList';
 import { SORT_OPTIONS, sortTodos } from './sortTodos';
@@ -15,6 +16,8 @@ export default function App() {
   const [sort, setSort] = useState('created-asc');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // The delete waiting for confirmation: { title, message, action }, or null.
+  const [confirm, setConfirm] = useState(null);
 
   const selectedList = lists.find((l) => l.id === selectedListId);
 
@@ -66,8 +69,15 @@ export default function App() {
     }
   }
 
-  async function handleDeleteList(list) {
-    if (!window.confirm(`Delete "${list.name}" and all of its todos?`)) return;
+  function handleDeleteList(list) {
+    setConfirm({
+      title: 'Delete list?',
+      message: <><strong>{list.name}</strong> and all of its todos will be permanently deleted.</>,
+      action: () => removeList(list),
+    });
+  }
+
+  async function removeList(list) {
     try {
       await deleteList(list.id);
       const remaining = lists.filter((l) => l.id !== list.id);
@@ -103,7 +113,15 @@ export default function App() {
   const handleRename = (todo, title) => saveTodo(todo, { title });
   const handleDueDateChange = (todo, dueDate) => saveTodo(todo, { dueDate });
 
-  async function handleDelete(todo) {
+  function handleDelete(todo) {
+    setConfirm({
+      title: 'Delete todo?',
+      message: <><strong>{todo.title}</strong> will be permanently deleted.</>,
+      action: () => removeTodo(todo),
+    });
+  }
+
+  async function removeTodo(todo) {
     try {
       await deleteTodo(todo.id);
       setTodos((prev) => prev.filter((t) => t.id !== todo.id));
@@ -160,6 +178,18 @@ export default function App() {
           )}
         </main>
       </div>
+
+      {confirm && (
+        <ConfirmDialog
+          title={confirm.title}
+          message={confirm.message}
+          onCancel={() => setConfirm(null)}
+          onConfirm={() => {
+            setConfirm(null);
+            confirm.action();
+          }}
+        />
+      )}
     </div>
   );
 }
