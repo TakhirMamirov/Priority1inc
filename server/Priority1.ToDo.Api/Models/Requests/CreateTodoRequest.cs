@@ -16,12 +16,16 @@ public class CreateTodoRequest
     /// <summary>Whether the todo starts out complete. Defaults to <c>false</c>.</summary>
     public bool IsComplete { get; set; }
 
+    /// <summary>Optional due date (<c>yyyy-MM-dd</c>).</summary>
+    public DateOnly? DueDate { get; set; }
+
     public Todo ToModel(int todoListId)
     {
         return new Todo
         {
             Title = Title,
             IsComplete = IsComplete,
+            DueDate = DueDate,
             TodoListId = todoListId
         };
     }

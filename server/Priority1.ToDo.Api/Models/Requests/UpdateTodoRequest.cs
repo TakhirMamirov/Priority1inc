@@ -16,13 +16,17 @@ public class UpdateTodoRequest
     /// <summary>Whether the todo is complete.</summary>
     public bool IsComplete { get; set; }
 
+    /// <summary>Due date (<c>yyyy-MM-dd</c>); <c>null</c> or omitted clears it.</summary>
+    public DateOnly? DueDate { get; set; }
+
     public Todo ToModel(int id)
     {
         return new Todo
         {
             Id = id,
             Title = Title,
-            IsComplete = IsComplete
+            IsComplete = IsComplete,
+            DueDate = DueDate
         };
     }
 }

@@ -61,7 +61,7 @@ public class TodosController : ControllerBase
     /// <param name="request">The todo item to create.</param>
     /// <param name="ct">Cancellation token.</param>
     /// <response code="201">The todo item was created; its URL is in the <c>Location</c> header.</response>
-    /// <response code="400">The title is missing, blank or longer than 200 characters.</response>
+    /// <response code="400">The title is missing, blank or longer than 200 characters, or the due date is not a valid <c>yyyy-MM-dd</c> date.</response>
     /// <response code="404">No todo list exists with this id.</response>
     [HttpPost("~/lists/{listId:int}/todos")]
     [Consumes("application/json")]
@@ -80,13 +80,13 @@ public class TodosController : ControllerBase
     }
 
     /// <summary>
-    /// Updates a todo item's title and completion state.
+    /// Updates a todo item's title, completion state and due date.
     /// </summary>
     /// <param name="id">The todo item id.</param>
     /// <param name="request">The new values.</param>
     /// <param name="ct">Cancellation token.</param>
     /// <response code="200">The todo item was updated.</response>
-    /// <response code="400">The title is missing, blank or longer than 200 characters.</response>
+    /// <response code="400">The title is missing, blank or longer than 200 characters, or the due date is not a valid <c>yyyy-MM-dd</c> date.</response>
     /// <response code="404">No todo item exists with this id.</response>
     [HttpPut("{id:int}")]
     [Consumes("application/json")]

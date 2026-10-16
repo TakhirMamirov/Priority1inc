@@ -19,6 +19,9 @@ public class TodoItem
     /// <summary>Whether the todo is complete.</summary>
     public bool IsComplete { get; set; }
 
+    /// <summary>When the todo is due (<c>yyyy-MM-dd</c>), or <c>null</c> if it has no due date.</summary>
+    public DateOnly? DueDate { get; set; }
+
     /// <summary>When the todo was created (UTC).</summary>
     public DateTime CreateDate { get; set; }
 
@@ -33,6 +36,7 @@ public class TodoItem
             TodoListId = todo.TodoListId,
             Title = todo.Title,
             IsComplete = todo.IsComplete,
+            DueDate = todo.DueDate,
             CreateDate = todo.CreateDate,
             UpdateDate = todo.UpdateDate
         };
@@ -46,6 +50,7 @@ public class TodoItem
             TodoListId = TodoListId,
             Title = Title,
             IsComplete = IsComplete,
+            DueDate = DueDate,
             CreateDate = CreateDate,
             UpdateDate = UpdateDate
         };

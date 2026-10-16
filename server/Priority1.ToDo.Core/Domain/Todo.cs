@@ -10,6 +10,9 @@ public class Todo : EntityBase
 
     public bool IsComplete { get; set; } = false;
 
+    // A calendar day, not a point in time, so it can't shift across time zones.
+    public DateOnly? DueDate { get; set; }
+
     public int TodoListId { get; set; }
 
     public TodoList? TodoList { get; set; }

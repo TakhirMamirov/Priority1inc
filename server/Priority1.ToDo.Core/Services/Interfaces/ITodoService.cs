@@ -32,7 +32,7 @@ public interface ITodoService
     Task<Todo?> CreateAsync(Todo itemToCreate, CancellationToken ct = default);
 
     /// <summary>
-    /// Updates the title and completion state of a todo item. The item stays in its list.
+    /// Updates the title, completion state and due date of a todo item. The item stays in its list.
     /// </summary>
     /// <param name="itemToUpdate">The todo item carrying the id to update and its new values.</param>
     /// <param name="ct">Cancellation token.</param>
