@@ -6,11 +6,13 @@ import {
 import AddTodoForm from './components/AddTodoForm';
 import ListSidebar from './components/ListSidebar';
 import TodoList from './components/TodoList';
+import { SORT_OPTIONS, sortTodos } from './sortTodos';
 
 export default function App() {
   const [lists, setLists] = useState([]);
   const [selectedListId, setSelectedListId] = useState(null);
   const [todos, setTodos] = useState([]);
+  const [sort, setSort] = useState('created-asc');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -135,8 +137,20 @@ export default function App() {
             <>
               <h2>{selectedList.name}</h2>
               <AddTodoForm onAdd={handleAdd} />
+              {todos.length > 0 && (
+                <div className="toolbar">
+                  <label>
+                    Sort by{' '}
+                    <select value={sort} onChange={(e) => setSort(e.target.value)}>
+                      {SORT_OPTIONS.map((o) => (
+                        <option key={o.value} value={o.value}>{o.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+              )}
               <TodoList
-                todos={todos}
+                todos={sortTodos(todos, sort)}
                 onToggle={handleToggle}
                 onRename={handleRename}
                 onDueDateChange={handleDueDateChange}

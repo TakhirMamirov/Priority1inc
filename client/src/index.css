@@ -172,6 +172,24 @@ button.primary:hover {
   background: #1a7f37;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: -0.75rem 0 0.75rem;
+  font-size: 0.85rem;
+  color: #6e7781;
+}
+
+.toolbar select {
+  margin-left: 0.25rem;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  color: #1f2328;
+}
+
 ul.todo-list {
   list-style: none;
   padding: 0;
