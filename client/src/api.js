@@ -13,12 +13,12 @@ async function handle(res) {
   return res.status === 204 ? null : res.json();
 }
 
-export function getTodos() {
-  return fetch(TODOS_URL).then(handle);
+export function getTodos(listId) {
+  return fetch(`${LISTS_URL}/${listId}/todos`).then(handle);
 }
 
-export function createTodo({ title, isComplete = false }) {
-  return fetch(TODOS_URL, {
+export function createTodo(listId, { title, isComplete = false }) {
+  return fetch(`${LISTS_URL}/${listId}/todos`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ title, isComplete }),

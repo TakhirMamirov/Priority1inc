@@ -22,17 +22,28 @@ export default function App() {
       .then((loaded) => {
         setLists(loaded);
         setSelectedListId(loaded[0]?.id ?? null);
+        if (loaded.length === 0) setLoading(false);
       })
-      .catch((e) => setError(e.message));
+      .catch((e) => {
+        setError(e.message);
+        setLoading(false);
+      });
   }, []);
 
-  // Load all todos once on mount.
+  // Reload todos whenever the selected list changes. `ignore` drops a response
+  // that arrives after the user has already switched to another list.
   useEffect(() => {
-    getTodos()
-      .then(setTodos)
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
-  }, []);
+    if (selectedListId === null) return;
+    let ignore = false;
+    setLoading(true);
+    getTodos(selectedListId)
+      .then((loaded) => !ignore && setTodos(loaded))
+      .catch((e) => !ignore && setError(e.message))
+      .finally(() => !ignore && setLoading(false));
+    return () => {
+      ignore = true;
+    };
+  }, [selectedListId]);
 
   async function handleCreateList(name) {
     try {
@@ -69,7 +80,7 @@ export default function App() {
 
   async function handleAdd(title) {
     try {
-      const created = await createTodo({ title });
+      const created = await createTodo(selectedListId, { title });
       setTodos((prev) => [...prev, created]);
     } catch (e) {
       setError(e.message);
@@ -126,19 +137,21 @@ export default function App() {
         />
 
         <main>
-          {selectedList && <h2>{selectedList.name}</h2>}
-
-          <AddTodoForm onAdd={handleAdd} />
-
           {loading ? (
             <p className="muted">Loading…</p>
+          ) : !selectedList ? (
+            <p className="muted">Create a list to get started.</p>
           ) : (
-            <TodoList
-              todos={todos}
-              onToggle={handleToggle}
-              onRename={handleRename}
-              onDelete={handleDelete}
-            />
+            <>
+              <h2>{selectedList.name}</h2>
+              <AddTodoForm onAdd={handleAdd} />
+              <TodoList
+                todos={todos}
+                onToggle={handleToggle}
+                onRename={handleRename}
+                onDelete={handleDelete}
+              />
+            </>
           )}
         </main>
       </div>
