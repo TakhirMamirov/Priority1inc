@@ -78,38 +78,28 @@ export default function App() {
     }
   }
 
-  async function handleAdd(title) {
+  async function handleAdd(title, dueDate) {
     try {
-      const created = await createTodo(selectedListId, { title });
+      const created = await createTodo(selectedListId, { title, dueDate });
       setTodos((prev) => [...prev, created]);
     } catch (e) {
       setError(e.message);
     }
   }
 
-  async function handleToggle(todo) {
+  // PUT replaces the whole todo, so always send every field, not just the changed one.
+  async function saveTodo(todo, changes) {
     try {
-      const updated = await updateTodo(todo.id, {
-        title: todo.title,
-        isComplete: !todo.isComplete,
-      });
+      const updated = await updateTodo(todo.id, { ...todo, ...changes });
       setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
     } catch (e) {
       setError(e.message);
     }
   }
 
-  async function handleRename(todo, title) {
-    try {
-      const updated = await updateTodo(todo.id, {
-        title,
-        isComplete: todo.isComplete,
-      });
-      setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
-    } catch (e) {
-      setError(e.message);
-    }
-  }
+  const handleToggle = (todo) => saveTodo(todo, { isComplete: !todo.isComplete });
+  const handleRename = (todo, title) => saveTodo(todo, { title });
+  const handleDueDateChange = (todo, dueDate) => saveTodo(todo, { dueDate });
 
   async function handleDelete(todo) {
     try {
@@ -149,6 +139,7 @@ export default function App() {
                 todos={todos}
                 onToggle={handleToggle}
                 onRename={handleRename}
+                onDueDateChange={handleDueDateChange}
                 onDelete={handleDelete}
               />
             </>

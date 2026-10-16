@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
+export default function TodoItem({ todo, onToggle, onRename, onDueDateChange, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(todo.title);
 
@@ -47,6 +47,14 @@ export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
           {todo.title}
         </span>
       )}
+
+      <input
+        type="date"
+        className={`due-date ${todo.dueDate ? '' : 'empty'}`}
+        title="Due date"
+        value={todo.dueDate ?? ''}
+        onChange={(e) => onDueDateChange(todo, e.target.value || null)}
+      />
 
       {!editing && (
         <button onClick={() => setEditing(true)}>Edit</button>

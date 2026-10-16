@@ -208,6 +208,30 @@ ul.todo-list {
   font-size: 1rem;
 }
 
+.add-form input.due-date {
+  flex: none;
+  color: #1f2328;
+}
+
+.todo-item input.due-date {
+  padding: 0.25rem 0.4rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
+  font-size: 0.85rem;
+  color: #57606a;
+}
+
+.todo-item input.due-date:hover,
+.todo-item input.due-date:focus {
+  border-color: #d0d7de;
+}
+
+.todo-item input.due-date.empty {
+  color: #8c959f;
+}
+
 .muted {
   color: #6e7781;
 }
